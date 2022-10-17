@@ -15,8 +15,7 @@ body{
     display: none;
 }
 .container{
-    background-color: rgb(244, 129, 75);
-    height: 40%;
+    background-color: rgb(244, 129, 75); 
     box-shadow: black 0px 3px 8px;
     padding: 2rem;
     border-radius: 5px;
@@ -49,13 +48,13 @@ body{
     border: none;
 }
 /* CLIMA */
-.weather-data{
+#weather-data{
     border-top: 2px solid black;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
     text-align: center;
 }
-.weather-data h2{
+#weather-data h2{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,13 +76,17 @@ body{
     align-items: center;
     margin: 0.6rem ;
 }
+#description{
+    font-weight: bold;
+    text-transform: capitalize;
+}
 #details-container{
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
-#details-container #umidity{
+#details-container #humidity{
 border-right: 1px solid black;
 padding: 0.6rem;
 margin: 0.6rem;
