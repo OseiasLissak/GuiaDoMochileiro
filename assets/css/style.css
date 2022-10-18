@@ -48,7 +48,7 @@ body{
     border: none;
 }
 /* CLIMA */
-#weather-data{
+#weather-data, #error-message{
     border-top: 2px solid black;
     margin-top: 1.5rem;
     padding-top: 1.5rem;

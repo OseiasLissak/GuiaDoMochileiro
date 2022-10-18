@@ -1,6 +1,7 @@
 // Variáveis e seleção de elementos
 const apiKey = "c0ff4e1edf5f6a03b52c78d36e7edc82";
-/* const apiCountryURL = "https://countryflagsapi.com/png/"; */
+const apiCountryURL = "https://countryflagsapi.com/png/";
+const apiUnsplash = "https://source.unsplash.com/1600x900/?";
 
 const cityInput = document.querySelector("#city-input");
 const countryElement = document.querySelector("#country");
@@ -12,6 +13,7 @@ const weatherIconElement = document.querySelector("#weather-icon");
 const humidityElement = document.querySelector("#humidity span");
 const windElement = document.querySelector("#wind span");
 const weatherDataContainer = document.querySelector("#weather-data");
+const errorMessageContainer = document.querySelector("#error-message");
 
 
 
@@ -27,8 +29,20 @@ const getWeatherData = async(city) => {
     return(data);
 }
 
+//ERROR
+const showErrorMessage = () => {
+    errorMessageContainer.classList.remove("hide");
+    weatherDataContainer.classList.add("hide");
+};
+
 const showWeatherData = async (city) => {
     const data = await getWeatherData(city);
+
+    if(data.cod === "404"){
+        showErrorMessage();
+        return;
+    } else{
+    errorMessageContainer.classList.add("hide");
     cityElement.innerText = data.name;
     tempElement.innerText = parseInt(data.main.temp);
     countryElement.setAttribute("src", `https://countryflagsapi.com/png/${data.sys.country}`);
@@ -37,7 +51,11 @@ const showWeatherData = async (city) => {
     humidityElement.innerText = `${data.main.humidity}%`; 
     windElement.innerText = `${data.wind.speed}km/h`
 
+
+    // Change bg image
+    document.body.style.backgroundImage = `url("${apiUnsplash + city}")`;
     weatherDataContainer.classList.remove("hide");
+    }
 }   
 
 //Eventos
