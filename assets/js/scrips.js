@@ -29,6 +29,18 @@ const getWeatherData = async(city) => {
     return(data);
 }
 
+const getTimeApi = async (lonCity,latCity) => {
+    const lat = latCity;
+    const lon = lonCity;
+    const apiTimeApiURL = `https://timeapi.io/api/Time/current/coordinate?latitude=${lat}&longitude=${lon}`;
+    
+    const resTimeApi = await fetch(apiTimeApiURL);
+    const apiTimeApiData= await apiTimeApiURL.json();
+    console.log(apiTimeApiData);
+
+    return(apiTimeApiData)
+}
+
 //ERROR
 const showErrorMessage = () => {
     errorMessageContainer.classList.remove("hide");
@@ -37,25 +49,32 @@ const showErrorMessage = () => {
 
 const showWeatherData = async (city) => {
     const data = await getWeatherData(city);
-
+ 
+    const lonCity = data.coord.lon;
+    const latCity = data.coord.lat;
+    
+    getTimeApi(lonCity, latCity);
+    console.log(lonCity,latCity);
+    
     if(data.cod === "404"){
         showErrorMessage();
         return;
     } else{
-    errorMessageContainer.classList.add("hide");
-    cityElement.innerText = data.name;
-    tempElement.innerText = parseInt(data.main.temp);
-    countryElement.setAttribute("src", `https://countryflagsapi.com/png/${data.sys.country}`);
-    descElement.innerText = data.weather[0].description;
-    weatherIconElement.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`);
-    humidityElement.innerText = `${data.main.humidity}%`; 
-    windElement.innerText = `${data.wind.speed}km/h`
-
-
+        errorMessageContainer.classList.add("hide");
+        cityElement.innerText = data.name;
+        tempElement.innerText = parseInt(data.main.temp);
+        countryElement.setAttribute("src", `https://countryflagsapi.com/png/${data.sys.country}`);
+        descElement.innerText = data.weather[0].description;
+        weatherIconElement.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`);
+        humidityElement.innerText = `${data.main.humidity}%`; 
+        windElement.innerText = `${data.wind.speed}km/h`
+        
+        
     // Change bg image
     document.body.style.backgroundImage = `url("${apiUnsplash + city}")`;
     weatherDataContainer.classList.remove("hide");
     }
+
 }   
 
 //Eventos
