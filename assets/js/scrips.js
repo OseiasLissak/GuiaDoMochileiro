@@ -1,7 +1,9 @@
 // Variáveis e seleção de elementos
-const apiKey = "c0ff4e1edf5f6a03b52c78d36e7edc82";
+const apiKeyWeather = "c0ff4e1edf5f6a03b52c78d36e7edc82";
+const apiKeyTimeZoneDb = "OF6CZ95QMSQJ"
 const apiCountryURL = "https://countryflagsapi.com/png/";
 const apiUnsplash = "https://source.unsplash.com/1600x900/?";
+const apiKeyIpGeolocation = "39dfe0024e624b7f902b4842d618d946";
 
 const cityInput = document.querySelector("#city-input");
 const countryElement = document.querySelector("#country");
@@ -20,25 +22,37 @@ const errorMessageContainer = document.querySelector("#error-message");
 
 //Funções
 const getWeatherData = async(city) => {
-    const apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`;
+    const apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKeyWeather}&lang=pt_br`;
 
     const res = await fetch(apiWeatherURL);
     const data = await res.json();
     console.log(data)
 
-    return(data);
+    return(data);   
 }
 
-const getTimeApi = async (lonCity,latCity) => {
-    const lat = latCity;
-    const lon = lonCity;
-    const apiTimeApiURL = `https://timeapi.io/api/Time/current/coordinate?latitude=${lat}&longitude=${lon}`;
+const getTimeApi = async (nameCity,nameCountry) => {
+    /* const lat = latCity;
+    const lon = lonCity; */
     
-    const resTimeApi = await fetch(apiTimeApiURL);
-    const apiTimeApiData= await apiTimeApiURL.json();
-    console.log(apiTimeApiData);
+   /*  const apiTimeZoneURL =   `http://api.timezonedb.com/v2.1/get-time-zone?key=${apiKeyTimeZoneDb}&format=json&by=position&lat=${lat}&lng=${lon}`;
 
-    return(apiTimeApiData)
+    console.log(apiTimeZoneURL)
+
+   const responseTimeZone = await fetch(apiTimeZoneURL);
+   const TimeZoneData = await responseTimeZone.json();
+   console.log(TimeZoneData); */
+
+   const city = nameCity;
+   const country = nameCountry;
+   const apiIpGeolocation = `https://api.ipgeolocation.io/timezone?apiKey=${apiKeyIpGeolocation}&location=${city},%20${country}`;
+console.log(apiIpGeolocation)
+   const responseIpGeoLocation = await fetch(apiIpGeolocation);
+   const responseIpGeoLocationData = await responseIpGeoLocation.json();
+   console.log(responseIpGeoLocationData);
+
+     
+
 }
 
 //ERROR
@@ -50,11 +64,15 @@ const showErrorMessage = () => {
 const showWeatherData = async (city) => {
     const data = await getWeatherData(city);
  
-    const lonCity = data.coord.lon;
-    const latCity = data.coord.lat;
     
-    getTimeApi(lonCity, latCity);
-    console.log(lonCity,latCity);
+   /*  const lonCity = data.coord.lon;
+    const latCity = data.coord.lat; */
+    const nameCountry = data.sys.country;
+    const nameCity = data.name;
+    console.log(nameCity, nameCountry)
+    
+    getTimeApi(nameCity, nameCountry);
+   
     
     if(data.cod === "404"){
         showErrorMessage();
