@@ -4,7 +4,7 @@
     font-family: "Ubuntu", sans-serif;
 }
 body{
-    background: linear-gradient(45deg, #EDE574, #E1F5C4) ;
+    background-image: url(/GuiaDoViajante/assets/img/chuttersnap-QkPb5g9p338-unsplash.jpg);
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@ body{
     display: none;
 }
 .container{
-    background-color: rgb(244, 129, 75); 
+    background-color: rgb(204, 218, 131); 
     box-shadow: black 0px 3px 8px;
     padding: 2rem;
     border-radius: 5px;
