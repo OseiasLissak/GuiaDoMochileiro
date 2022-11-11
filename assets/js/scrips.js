@@ -4,6 +4,8 @@ const apiKeyTimeZoneDb = "OF6CZ95QMSQJ"
 const apiCountryURL = "https://countryflagsapi.com/png/";
 const apiUnsplash = "https://source.unsplash.com/1600x900/?";
 const apiKeyIpGeolocation = "39dfe0024e624b7f902b4842d618d946";
+const apiKeyApiNinjas = "HH5+R9kHiPWwfD5ObdlaUw==gO377eLIHNbxaX3D";
+const apiKeyBigData = "bdc_a82aaa0389c04063a35f56a20aa81d61";
 
 const cityInput = document.querySelector("#city-input");
 const countryElement = document.querySelector("#country");
@@ -17,8 +19,14 @@ const windElement = document.querySelector("#wind span");
 const weatherDataContainer = document.querySelector("#weather-data");
 const errorMessageContainer = document.querySelector("#error-message");
 
-const timezoneElement = document.querySelector("#time-details span")
+const timezoneElement = document.querySelector("#time-details span");
 const dateElement = document.querySelector("#date span");
+
+const populationElement = document.querySelector("#population span");
+
+const languageElement = document.querySelector("#language span");
+const coinElement = document.querySelector("#coin span");
+const codeElement = document.querySelector("#code-calling span");
 
 
 
@@ -31,24 +39,65 @@ const getWeatherData = async(city) => {
     const data = await res.json();
     console.log(data)
 
+    getPopulation(data.name), getTimeZoneDate(data.name), getCountry(data.sys.country);    
+
     return(data);   
 }
 
-const getTimeApi = async (city) => {
-
-   const apiIpGeolocation = `https://api.ipgeolocation.io/timezone?apiKey=${apiKeyIpGeolocation}&location=${city}`;
+const getTimeZoneDate = async (city) => {
     
-   console.log(apiIpGeolocation)
-   
-   const responseIpGeoLocation = await fetch(apiIpGeolocation);
-   const timeZoneData = await responseIpGeoLocation.json();
-   console.log(timeZoneData);
+    const apiTimeZoneDateURL = `https://api.api-ninjas.com/v1/worldtime?city=${city}`
 
-   timezoneElement.innerText = timeZoneData.time_12;
-   dateElement.innerText = timeZoneData.date;
- 
-   console.log(timeZoneData.date, timeZoneData.time_12)
-   
+    const initNinjas = {
+        headers: { 'X-Api-Key': 'HH5+R9kHiPWwfD5ObdlaUw==gO377eLIHNbxaX3D'},
+        contentType: 'application/json',
+    }
+
+    const responseTimeZoneDate = await fetch(apiTimeZoneDateURL, initNinjas) ;
+    const apiTimeZoneDateData = await responseTimeZoneDate.json();
+
+    timezoneElement.innerText = `${apiTimeZoneDateData.hour}:${apiTimeZoneDateData.minute}:${apiTimeZoneDateData.second}`;
+    dateElement.innerText = `${apiTimeZoneDateData.day_of_week}, ${apiTimeZoneDateData.day}-${apiTimeZoneDateData.month}-${apiTimeZoneDateData.year}`;
+
+
+    console.log(apiTimeZoneDateData);
+
+    return(apiTimeZoneDateData);
+}
+
+
+const getPopulation = async (city) => {
+    
+    const apiPopulationURL = `https://api.api-ninjas.com/v1/city?name=${city}`
+
+    const initNinjas = {
+        headers: { 'X-Api-Key': 'HH5+R9kHiPWwfD5ObdlaUw==gO377eLIHNbxaX3D'},
+        contentType: 'application/json',
+    }
+
+    const responsePopulation = await fetch(apiPopulationURL, initNinjas) ;
+    const populationData = await responsePopulation.json();
+    console.log(populationData);
+
+    populationElement.innerText = populationData[0].population;
+
+    return(populationData);
+
+}
+
+const getCountry = async (country) => {
+
+    const apiBigDataURL = `https://api.bigdatacloud.net/data/country-info?code=${country}&key=${apiKeyBigData}`;
+
+    const responseInfoCountries = await fetch(apiBigDataURL);
+    const countriesData = await responseInfoCountries.json();
+
+    console.log(countriesData);
+
+    languageElement.innerText = countriesData.isoAdminLanguages[0].isoName;
+    coinElement.innerText = `${countriesData.currency.code}, ${coinElement.innerText = countriesData.currency.name}`;
+    codeElement.innerText = `DDI:${countriesData.callingCode}`;
+    
 }
 
 //ERROR
@@ -94,6 +143,6 @@ searchBtn.addEventListener("click", function (event){
 cityInput.addEventListener("keyup", (e) =>{
     if(e.code === "Enter"){
         const city = e.target.value;
-        showWeatherData(city), getTimeApi(city);
+        showWeatherData(city);
     }
 });
