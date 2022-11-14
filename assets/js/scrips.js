@@ -107,7 +107,7 @@ const showErrorMessage = () => {
 const showWeatherData = async (city) => {
     const data = await getWeatherData(city);
 
-    console.log(data.cod)
+    console.log(data)
    
     if(data.cod === "404"){        
         showErrorMessage();
