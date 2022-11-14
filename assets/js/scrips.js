@@ -39,8 +39,7 @@ const getWeatherData = async(city) => {
     const data = await res.json();
     console.log(data)
 
-    getPopulation(data.name), getTimeZoneDate(data.name), getCountry(data.sys.country);    
-
+    getPopulation(data.name), getTimeZoneDate(data.name), getCountry(data.sys.country);  
     return(data);   
 }
 
@@ -58,7 +57,6 @@ const getTimeZoneDate = async (city) => {
 
     timezoneElement.innerText = `${apiTimeZoneDateData.hour}:${apiTimeZoneDateData.minute}:${apiTimeZoneDateData.second}`;
     dateElement.innerText = `${apiTimeZoneDateData.day_of_week}, ${apiTimeZoneDateData.day}-${apiTimeZoneDateData.month}-${apiTimeZoneDateData.year}`;
-
 
     console.log(apiTimeZoneDateData);
 
@@ -108,8 +106,10 @@ const showErrorMessage = () => {
 
 const showWeatherData = async (city) => {
     const data = await getWeatherData(city);
-    
-    if(data.cod === "404"){
+
+    console.log(data.cod)
+   
+    if(data.cod === "404"){        
         showErrorMessage();
         return;
     } else{
