@@ -24,7 +24,7 @@ Futuramente pode-se acrescentar mais informações importantes, como: locais par
 
 ## Link do projeto
 
-#### <https://exemplo.com/>
+#### https://guiadomochileiro.netlify.app
 
 # Tecnologias utilizadas
   
