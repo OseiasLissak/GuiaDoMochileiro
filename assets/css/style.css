@@ -5,12 +5,12 @@
 }
 body{
     
-    background-image: url(/assets/img/chuttersnap-QkPb5g9p338-unsplash.jpg);
+    background-image: url('../img/chuttersnap-QkPb5g9p338-unsplash.jpg');
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;  
+    height: 100vh;
     flex-direction: column;  
 }
 .hide{
@@ -190,4 +190,5 @@ margin: 0.6rem;
     display: inline-block;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
- }
+}
+}
